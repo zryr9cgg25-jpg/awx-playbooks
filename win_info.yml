@@ -1,0 +1,12 @@
+---
+- name: Windows info test
+  hosts: windows
+  gather_facts: false
+
+  tasks:
+    - name: Get hostname
+      ansible.windows.win_command: hostname
+
+    - name: Get Windows version
+      ansible.windows.win_shell: |
+        Get-ComputerInfo | Select-Object WindowsProductName, WindowsVersion, CsName
