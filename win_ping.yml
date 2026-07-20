@@ -1,6 +1,6 @@
 ---
 - name: Windows connection test
-  hosts: windows
+  hosts: 192.168.10.124
   gather_facts: false
 
   tasks:
