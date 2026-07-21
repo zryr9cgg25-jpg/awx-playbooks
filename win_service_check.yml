@@ -1,0 +1,18 @@
+---
+- name: Windows service check
+  hosts: windows
+  gather_facts: false
+
+  tasks:
+    - name: Get WinRM service info
+      ansible.windows.win_service_info:
+        name: WinRM
+      register: winrm_service
+
+    - name: Show WinRM service info
+      ansible.builtin.debug:
+        msg:
+          - "Name: {{ winrm_service.services[0].name }}"
+          - "Display name: {{ winrm_service.services[0].display_name }}"
+          - "State: {{ winrm_service.services[0].state }}"
+          - "Start mode: {{ winrm_service.services[0].start_mode }}"
