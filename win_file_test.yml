@@ -1,0 +1,29 @@
+---
+- name: Windows file operation test
+  hosts: windows
+  gather_facts: false
+
+  tasks:
+    - name: Create test directory
+      ansible.windows.win_file:
+        path: C:\Temp\awx-test
+        state: directory
+
+    - name: Create test file
+      ansible.windows.win_copy:
+        content: |
+          This file was created by AWX.
+          Target host: {{ inventory_hostname }}
+        dest: C:\Temp\awx-test\hello-awx.txt
+
+    - name: Check test file
+      ansible.windows.win_stat:
+        path: C:\Temp\awx-test\hello-awx.txt
+      register: file_result
+
+    - name: Show file status
+      ansible.builtin.debug:
+        msg:
+          - "Exists: {{ file_result.stat.exists }}"
+          - "Path: {{ file_result.stat.path }}"
+          - "Size: {{ file_result.stat.size }}"
